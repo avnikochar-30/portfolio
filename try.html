@@ -1,0 +1,712 @@
+
+<style>
+:root {
+    --primary: #6366f1;
+    --secondary: #06b6d4;
+    --accent: #f59e0b;
+    --dark: #0f172a;
+    --darker: #020617;
+    --light: #f8fafc;
+    --gray: #64748b;
+    --glass: rgba(255, 255, 255, 0.1);
+    --glow: 0 0 30px rgba(99, 102, 241, 0.3);
+}
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+    color: var(--light);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+}
+
+h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+}
+
+h3 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+p {
+    margin-bottom: 1rem;
+    color: var(--gray);
+    line-height: 1.6;
+}
+
+a {
+    color: var(--secondary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: var(--primary);
+}
+
+/* Background Animation */
+.bg-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
+    animation: backgroundShift 20s ease-in-out infinite;
+}
+
+@keyframes backgroundShift {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+/* Navigation */
+nav {
+    position: fixed;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    padding: 0.8rem 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+nav a {
+    color: var(--light);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.6rem 1.2rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    position: relative;
+    font-size: 0.95rem;
+}
+
+nav a:hover {
+    color: var(--primary);
+    background: rgba(99, 102, 241, 0.1);
+    transform: translateY(-1px);
+}
+
+nav a.active {
+    color: white;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+/* Page Container */
+.page {
+    display: none;
+    min-height: 100vh;
+    padding: 8rem 2rem 4rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+.page.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Common Section Styles */
+.section-hero {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-hero p {
+    font-size: 1.2rem;
+    color: var(--gray);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Button Styles */
+.btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: inherit;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--light);
+    border: 2px solid var(--secondary);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+}
+
+.btn-secondary:hover {
+    background: var(--secondary);
+    color: var(--dark);
+}
+
+/* Card Styles */
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(6, 182, 212, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+    border-color: rgba(99, 102, 241, 0.3);
+}
+
+/* Grid Layouts */
+.grid {
+    display: grid;
+    gap: 2rem;
+}
+
+.grid-2 {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid-3 {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.grid-4 {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes gradientFlow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.fade-in-up {
+    animation: fadeInUp 1s ease both;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientFlow 4s ease-in-out infinite;
+}
+
+/* Page Transition */
+.page-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    z-index: 9998;
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+}
+
+.page-transition.active {
+    transform: translateX(0);
+}
+
+/* Loading Animation */
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--darker);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    transition: opacity 0.5s ease;
+}
+
+.loading.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader {
+    width: 60px;
+    height: 60px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top: 3px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--light);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--light);
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Utility Classes */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 1rem; }
+.mb-4 { margin-bottom: 1.5rem; }
+.mb-5 { margin-bottom: 2rem; }
+
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 1rem; }
+.mt-4 { margin-top: 1.5rem; }
+.mt-5 { margin-top: 2rem; }
+
+.p-1 { padding: 0.25rem; }
+.p-2 { padding: 0.5rem; }
+.p-3 { padding: 1rem; }
+.p-4 { padding: 1.5rem; }
+.p-5 { padding: 2rem; }
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.gap-1 { gap: 0.25rem; }
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 1rem; }
+.gap-4 { gap: 1.5rem; }
+.gap-5 { gap: 2rem; }
+
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.max-w-sm { max-width: 24rem; }
+.max-w-md { max-width: 28rem; }
+.max-w-lg { max-width: 32rem; }
+.max-w-xl { max-width: 36rem; }
+.max-w-2xl { max-width: 42rem; }
+
+.rounded { border-radius: 0.25rem; }
+.rounded-md { border-radius: 0.375rem; }
+.rounded-lg { border-radius: 0.5rem; }
+.rounded-xl { border-radius: 0.75rem; }
+.rounded-2xl { border-radius: 1rem; }
+.rounded-full { border-radius: 9999px; }
+
+.shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+.shadow { box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); }
+.shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+.shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+.shadow-xl { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .container {
+        max-width: 90%;
+    }
+    
+    nav {
+        padding: 0.6rem 1.5rem;
+    }
+    
+    nav ul {
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    nav {
+        padding: 0.6rem 1.5rem;
+        top: 1rem;
+    }
+
+    nav ul {
+        gap: 1rem;
+    }
+
+    nav a {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .page {
+        padding: 6rem 1rem 2rem;
+    }
+
+    .section-hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+        grid-template-columns: 1fr;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+    }
+
+    h1 {
+        font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    h2 {
+        font-size: clamp(1.5rem, 3vw, 2.5rem);
+    }
+
+    h3 {
+        font-size: clamp(1.25rem, 2.5vw, 2rem);
+    }
+}
+
+@media (max-width: 480px) {
+    nav {
+        padding: 0.5rem 1rem;
+    }
+
+    nav ul {
+        gap: 0.5rem;
+    }
+
+    nav a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    .page {
+        padding: 5rem 0.5rem 1rem;
+    }
+
+    .section-hero h1 {
+        font-size: 2rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+
+    .btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .bg-animation,
+    nav,
+    .page-transition,
+    .loading {
+        display: none !important;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
+    }
+    
+    .page {
+        display: block !important;
+        opacity: 1 !important;
+        transform: none !important;
+        padding: 1rem !important;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    :root {
+        --primary: #0066cc;
+        --secondary: #0099cc;
+        --dark: #000000;
+        --light: #ffffff;
+        --gray: #666666;
+    }
+    
+    .card {
+        border: 2px solid var(--primary);
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .bg-animation {
+        animation: none;
+    }
+}
+
+/* Dark Mode Support (if needed) */
+@media (prefers-color-scheme: light) {
+    /* Add light mode styles here if needed */
+}
+
+</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IoT-Based Air Pollution Monitoring System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.7;
+      margin: 20px;
+      background-color: #f7f7f7;
+      color: #333;
+    }
+    h1, h2, h3 {
+      color: #004080;
+    }
+    h1 {
+      text-align: center;
+    }
+    ul {
+      margin-top: 0;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>IoT-Based Air Pollution Monitoring System</h1>
+
+  <div class="section">
+    <h2>Abstract</h2>
+    <p>This research presents an Internet of Things (IoT) based system for real-time air pollution monitoring. The system utilizes sensors to detect harmful gases such as CO<sub>2</sub>, smoke, alcohol, benzene, and NH<sub>3</sub>. Data is transmitted to a web server, providing a user-friendly interface for monitoring air quality. An alarm is triggered when pollution levels exceed a predefined threshold. It will show the air quality in PPM on the LCD and as well as on webpage so that we can monitor it very easily.</p>
+  </div>
+
+  <div class="section">
+    <h2>Introduction</h2>
+    <p>In recent years, the escalating levels of air pollution have emerged as a critical global issue, posing substantial threats to public health and environmental sustainability. The pervasive nature of air pollutants, stemming from industrial emissions, vehicular exhaust, and other anthropogenic sources, has intensified the urgency for robust monitoring systems to comprehensively assess and manage air quality.</p>
+  </div>
+
+  <div class="section">
+    <h3>1. Background</h3>
+    <p>The intensifying concern over air pollution reflects the profound impacts on human health, ecosystems, and climate. With urbanization and industrialization on the rise, the concentrations of harmful pollutants such as CO<sub>2</sub>, smoke, alcohol, benzene, and NH<sub>3</sub> have reached unprecedented levels. This necessitates a proactive approach in developing effective monitoring systems to safeguard public well-being.</p>
+
+    <h3>2. Problem Statement</h3>
+    <p>Current air pollution monitoring methods often face limitations in terms of granularity, real-time data accessibility, and widespread coverage. Traditional monitoring systems may not provide timely information, hindering the ability to respond swiftly to deteriorating air quality. The need for a more responsive and technologically advanced monitoring solution is evident to address these limitations and bridge the gaps in existing methodologies.</p>
+
+    <h3>3. Objectives</h3>
+    <ul>
+      <li>Develop an IoT-based Air Pollution Monitoring System capable of detecting pollutants such as CO<sub>2</sub>, smoke, alcohol, benzene, and NH<sub>3</sub>.</li>
+      <li>Implement real-time monitoring functionality to provide immediate and continuous data on air quality conditions.</li>
+      <li>Integrate the system with a web server to facilitate remote accessibility and user-friendly visualization of air quality data.</li>
+      <li>Incorporate an alarm system to trigger alerts when pollution levels surpass predefined thresholds, ensuring timely response to potential health risks.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Literature Review</h2>
+    <p>Air pollution monitoring has gained increased attention due to the escalating concerns about environmental health and public safety. Previous studies have explored various methodologies for monitoring air quality, with recent advancements focusing on integrating Internet of Things (IoT) technologies.</p>
+
+    <ul>
+      <li><strong>IoT-Based Air Quality Monitoring Systems:</strong> Research by Smith et al. (2019) demonstrated the effectiveness of IoT devices in collecting and transmitting data from air quality sensors, enabling remote monitoring and analysis.</li>
+      <li><strong>Gas Detection Sensors:</strong> Johnson et al. (2018) studied the reliability and accuracy of gas sensors like CO<sub>2</sub>, smoke, alcohol, benzene, and NH<sub>3</sub>.</li>
+      <li><strong>Web Server Integration:</strong> Mohammedsalman Patel and Prerna Gupta (2020) introduced a web-based platform for real-time air quality data visualization.</li>
+      <li><strong>Alarm Systems in Air Quality Monitoring:</strong> Chen et al. (2017) enhanced monitoring systems with alarms to alert users of dangerous pollutant levels.</li>
+      <li><strong>LCD Display in Environmental Monitoring:</strong> Wang and Li (2016) used LCD displays to provide instant feedback on environmental data.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Methodology</h2>
+    <h3>Hardware Setup / Circuit Connections</h3>
+    <ul>
+      <li>MQ135 Gas sensor</li>
+      <li>Arduino Uno</li>
+      <li>Wi-Fi module ESP8266</li>
+      <li>16x2 LCD</li>
+      <li>Breadboard</li>
+      <li>10K potentiometer</li>
+      <li>1K ohm resistors</li>
+      <li>220-ohm resistor</li>
+      <li>Buzzer</li>
+    </ul>
+
+    <p><strong>ESP8266 Setup:</strong> Connect VCC and CH_PD to 3.3V. Use a voltage divider with resistors for RX pin. TX connects to pin 10, RX (via divider) to pin 9 of Arduino.</p>
+
+    <p><strong>MQ135 Sensor:</strong> VCC and GND to 5V and GND of Arduino, output to A0.</p>
+
+    <p><strong>Buzzer:</strong> Connect to pin 8 of Arduino to trigger when pollution crosses the threshold.</p>
+
+    <p><strong>LCD Connections:</strong></p>
+    <ul>
+      <li>Pin 1 to GND</li>
+      <li>Pin 2 to 5V</li>
+      <li>Pin 3 to middle of 10K potentiometer</li>
+      <li>Pin 4 (RS) to pin 12 of Arduino</li>
+      <li>Pin 5 (R/W) to GND</li>
+      <li>Pin 6 (E) to pin 11</li>
+      <li>D4, D5, D6, D7 to pins 5, 4, 3, 2 respectively</li>
+      <li>Pin 15 through 220-ohm resistor to 5V</li>
+      <li>Pin 16 to GND</li>
+    </ul>
+
+    <h3>Alarm System</h3>
+    <p>When the sensor detects a concentration above the threshold, the Arduino triggers the buzzer for an alert.</p>
+  </div>
+
+  <div class="section">
+    <h2>Conclusion</h2>
+    <p>This research successfully introduced an IoT-based system for real-time air pollution monitoring using gas sensors and Arduino. The system detects pollutants like CO<sub>2</sub>, smoke, alcohol, benzene, and NH<sub>3</sub>, and displays data on both LCD and a web page.</p>
+
+    <p>The real-time monitoring and alarm capabilities make it useful for public health, urban planning, and environmental management. The system's simplicity and efficiency ensure wide usability, while the alarm feature enhances safety by providing immediate alerts.</p>
+
+    <p>Overall, this project contributes a comprehensive, accessible, and responsive solution to air pollution monitoring using modern IoT technologies.</p>
+  </div>
+
+</body>
+</html>
